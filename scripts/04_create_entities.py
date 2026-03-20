@@ -1,17 +1,22 @@
 import pandas as pd
+import os
 
-df = pd.read_csv("data_staging/clean_tickets.csv")
+STAGING_PATH = "data_staging"
 
-# Customer entity
-customers = df[['customer_id', 'Customer Email', 'Customer Gender', 'Customer Age']].drop_duplicates()
-customers.to_csv("data_staging/customers.csv", index=False)
+customers_df = pd.read_csv(os.path.join(STAGING_PATH, "clean_customers.csv"))
+products_df = pd.read_csv(os.path.join(STAGING_PATH, "clean_products.csv"))
+orders_df = pd.read_csv(os.path.join(STAGING_PATH, "clean_orders.csv"))
 
-# Ticket entity
-tickets = df[['Ticket ID', 'Ticket Subject', 'Ticket Status', 'Ticket Priority', 'Ticket Type']]
-tickets.to_csv("data_staging/tickets.csv", index=False)
+# CUSTOMER ENTITY
+customers = customers_df.drop_duplicates(subset=["customer_id"])
+customers.to_csv(os.path.join(STAGING_PATH, "kg_customers.csv"), index=False)
 
-# Product entity
-products = df[['product_id', 'Product Purchased']].drop_duplicates()
-products.to_csv("data_staging/products.csv", index=False)
+# PRODUCT ENTITY
+products = products_df.drop_duplicates(subset=["product_id"])
+products.to_csv(os.path.join(STAGING_PATH, "kg_products.csv"), index=False)
 
-print("Entity tables created successfully.")
+# ORDER ENTITY
+orders = orders_df.drop_duplicates(subset=["order_id"])
+orders.to_csv(os.path.join(STAGING_PATH, "kg_orders.csv"), index=False)
+
+print("Enterprise entity tables created successfully.")

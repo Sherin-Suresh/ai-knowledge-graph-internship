@@ -1,12 +1,13 @@
 import pandas as pd
 
-df = pd.read_csv("data_raw/customer_support_tickets.csv")
+customers = pd.read_csv("data_raw/dim_customer.csv")
+products = pd.read_csv("data_raw/dim_product.csv")
+orders = pd.read_csv("data_raw/fact_order.csv")
 
-print("Missing values:")
-print(df.isnull().sum())
+print("Customers Missing:\n", customers.isnull().sum())
+print("Products Missing:\n", products.isnull().sum())
+print("Orders Missing:\n", orders.isnull().sum())
 
-print("\nDuplicate rows:")
-print(df.duplicated().sum())
-
-print("\nUnique values per column:")
-print(df.nunique())
+print("Duplicate Customers:", customers.duplicated().sum())
+print("Duplicate Products:", products.duplicated().sum())
+print("Duplicate Orders:", orders.duplicated().sum())
